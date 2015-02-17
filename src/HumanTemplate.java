@@ -34,7 +34,7 @@ public class HumanTemplate extends Humanoid
     
     // The humans's age.
     private int age;
-    private double deathProbability = 0.05;
+    private double deathProbability = 0.01;
 
     /**
      * Create a new human. A human may be created with age

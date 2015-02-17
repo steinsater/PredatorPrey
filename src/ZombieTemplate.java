@@ -27,6 +27,8 @@ public class ZombieTemplate extends Humanoid
     private int foodLevel;
     private double deathProbability = 0.002;
 
+    private static int days = 1;
+
     /**
      * Create a fox. A fox can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
@@ -49,7 +51,7 @@ public class ZombieTemplate extends Humanoid
     }
 
     public ZombieTemplate(Field field,Location location,int strength, int stamina, int luck, int age, int hunger){
-        super(field,location,strength,stamina,luck,age,hunger);
+        super(field, location, strength, stamina, luck, age, hunger);
     }
 
     public static ZombieTemplate makeZombie(Humanoid human){
@@ -67,7 +69,8 @@ public class ZombieTemplate extends Humanoid
      */
     public void act(List<Agent> newZombies)
     {
-        //incrementAge();
+        days++;
+        incrementAge();
         if(isAlive()) {
                       
             // Move towards a source of food if found.
@@ -93,7 +96,9 @@ public class ZombieTemplate extends Humanoid
      */
     private void incrementAge()
     {
-        age++;
+        if(days % 365 == 0){
+            age++;
+        }
         if(age > MAX_AGE) {
             setDead();
         }
