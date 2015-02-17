@@ -13,26 +13,31 @@ public class HumanTemplate extends Agent
     // Characteristics shared by all rabbits (class variables).
 
     // The age at which a human can start to breed.
-    private static final int BREEDING_AGE = 18;
+    private static final int MIN_BREEDING_AGE = 18;
+    // The age at which a human can start to breed.
+    private static final int MAX_BREEDING_AGE = 40;
     // The age to which a human can live.
     private static final int MAX_AGE = 100;
     // The age a human starts to die of natural causes
-    private static final int NATURALCAUSE_AGE = 35;
+    private static final int NATURALCAUSE_AGE = 60;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 4;
+    private static final int MAX_LITTER_SIZE = 40;
+    private static int earlierbirths = 0;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     private static int born = 0;
+
+    private static int days = 1;
     
     // Individual characteristics (instance fields).
     
     // The humans's age.
     private int age;
-    private double deathProbability = 0.20;
+    private double deathProbability = 0.05;
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new human. A human may be created with age
      * zero (a new born) or with a random age.
      * 
      * @param randomAge If true, the rabbit will have a random age.
@@ -55,6 +60,7 @@ public class HumanTemplate extends Agent
      */
     public void act(List<Agent> newHumanoids)
     {
+        days++;
         incrementAge();
         if(isAlive()) {
             giveBirth(newHumanoids);            
@@ -76,7 +82,11 @@ public class HumanTemplate extends Agent
      */
     private void incrementAge()
     {
-        age++;
+
+        if(days % 365 == 0){
+            age++;
+        }
+
         if(age > MAX_AGE) {
             setDead();
         }
@@ -101,40 +111,25 @@ public class HumanTemplate extends Agent
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         Location randomLocation = field.randomAdjacentLocation(getLocation());
         Object o = field.getObjectAt(randomLocation);
-        if ((free.size() > 0) && canBreed() && o != null){
+        if ((free.size() > 0) && canBreed() && o != null && earlierbirths<MAX_LITTER_SIZE){
             Location loc = free.remove(0);
             HumanTemplate young = new HumanTemplate(false, field, loc);
             newHumanoids.add(young);
             born++;
+            earlierbirths++;
         }
-        /*int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            HumanTemplate young = new HumanTemplate(false, field, loc);
-            newHumanoids.add(young);
-        }*/
+
     }
         
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    /*private int breed()
-    {
-        int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
-            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        return births;
+
 
 
     /**
-     * A rabbit can breed if it has reached the breeding age.
-     * @return true if the rabbit can breed, false otherwise.
+     * A human can breed if it has reached the breeding age and not passed max breeding age.
+     * @return true if the human can breed, false otherwise.
      */
     private boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+        return MIN_BREEDING_AGE <= age && age >= MAX_BREEDING_AGE;
     }
 }
