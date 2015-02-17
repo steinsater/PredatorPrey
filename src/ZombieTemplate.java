@@ -15,7 +15,7 @@ public class ZombieTemplate extends Agent
     
    
     // The age to which a fox can live.
-    private static final int MAX_AGE = 2000;
+    private static final int MAX_AGE = 20000;
     private static final int HUMAN_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -25,6 +25,7 @@ public class ZombieTemplate extends Agent
     private int age;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
+    private double deathProbability = 0.002;
 
     /**
      * Create a fox. A fox can be created as a new born (age zero
@@ -83,6 +84,11 @@ public class ZombieTemplate extends Agent
     {
         age++;
         if(age > MAX_AGE) {
+            setDead();
+        }
+        deathProbability = (deathProbability + 0.001);
+        // Checks if the humans age is over the age set for death by natural causes
+        if (rand.nextDouble() <= deathProbability) {
             setDead();
         }
     }
