@@ -25,6 +25,8 @@ public class HumanTemplate extends Agent
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
+    private static int born = 0;
+    
     // Individual characteristics (instance fields).
     
     // The humans's age.
@@ -99,12 +101,19 @@ public class HumanTemplate extends Agent
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
+        Location randomLocation = field.randomAdjacentLocation(getLocation());
+        Object o = field.getObjectAt(randomLocation);
+        if ((free.size() > 0) && (18 < age) && o != null){
             Location loc = free.remove(0);
             HumanTemplate young = new HumanTemplate(false, field, loc);
             newHumanoids.add(young);
         }
+        /*int births = breed();
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            HumanTemplate young = new HumanTemplate(false, field, loc);
+            newHumanoids.add(young);
+        }*/
     }
         
     /**

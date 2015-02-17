@@ -40,7 +40,7 @@ public class GridView extends JFrame implements SimulatorView
         stats = new FieldStats();
         colors = new HashMap<Class, Color>();
 
-        setTitle("Fox and Rabbit Simulation");
+        setTitle("Humans and Zombies Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
         

@@ -55,12 +55,12 @@ public class GraphView implements SimulatorView
 
     /**
      * Define a color to be used for a given class of animal.
-     * @param animalClass The animal's Class object.
+     * @param humanoidClass The humanoidClass Class object.
      * @param color The color to be used for the given class.
      */
-    public void setColor(Class animalClass, Color color)
+    public void setColor(Class humanoidClass, Color color)
     {
-        colors.put(animalClass, color);
+        colors.put(humanoidClass, color);
         classes = colors.keySet();
     }
 
