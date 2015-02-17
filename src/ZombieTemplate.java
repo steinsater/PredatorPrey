@@ -59,14 +59,14 @@ public class ZombieTemplate extends Agent
      * rabbits. In the process, it might breed, die of hunger,
      * or die of old age.
      * @param field The field currently occupied.
-     * @param newZombies A list to return newly born foxes.
+     * @param newFoxes A list to return newly born foxes.
      */
-    public void act(List<Agent> newZombies)
+    public void act(List<Agent> newFoxes)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            giveBirth(newZombies);            
+            giveBirth(newFoxes);            
             // Move towards a source of food if found.
             Location newLocation = findHuman();
             if(newLocation == null) { 
@@ -134,9 +134,9 @@ public class ZombieTemplate extends Agent
     /**
      * Check whether or not this fox is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param Zombies A list to return newly born foxes.
+     * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Agent> Zombies)
+    private void giveBirth(List<Agent> newFoxes)
     {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -146,7 +146,7 @@ public class ZombieTemplate extends Agent
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             ZombieTemplate young = new ZombieTemplate(false, field, loc);
-            Zombies.add(young);
+            newFoxes.add(young);
         }
     }
         
