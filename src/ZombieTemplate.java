@@ -13,8 +13,7 @@ public class ZombieTemplate extends Agent
 {
     // Characteristics shared by all foxes (class variables).
     
-    // The age at which a fox can start to breed.
-    private static final int BREEDING_AGE = 15;
+   
     // The age to which a fox can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a fox breeding.
@@ -66,7 +65,7 @@ public class ZombieTemplate extends Agent
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            giveBirth(newZombies);            
+                      
             // Move towards a source of food if found.
             Location newLocation = findHuman();
             if(newLocation == null) { 
@@ -121,54 +120,15 @@ public class ZombieTemplate extends Agent
             Object humanoid = field.getObjectAt(where);
             if(humanoid instanceof HumanTemplate) {
                 HumanTemplate human = (HumanTemplate) humanoid;
+                //ZombieTemplate zombie = (ZombieTemplate) humanoid;
                 if(human.isAlive()) { 
-                    human.setDead();
-                    foodLevel = RABBIT_FOOD_VALUE;
+                    human.setZombie();
                     return where;
                 }
             }
         }
         return null;
     }
-    
-    /**
-     * Check whether or not this fox is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param Zombies A list to return newly born foxes.
-     */
-    private void giveBirth(List<Agent> Zombies)
-    {
-        // New foxes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            ZombieTemplate young = new ZombieTemplate(false, field, loc);
-            Zombies.add(young);
-        }
-    }
-        
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    private int breed()
-    {
-        int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
-            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        return births;
-    }
-
-    /**
-     * A fox can breed if it has reached the breeding age.
-     */
-    private boolean canBreed()
-    {
-        return age >= BREEDING_AGE;
-    }
+   
+  
 }
