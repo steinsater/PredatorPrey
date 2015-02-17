@@ -11,7 +11,7 @@ import java.util.Random;
  * @author Stein
  */
 public abstract class Humanoid extends Agent{
-    
+    Random rand;
     protected int strength;
     protected int stamina;
     protected int luck;
@@ -20,6 +20,7 @@ public abstract class Humanoid extends Agent{
 
     protected Humanoid(Field field, Location location, int strength, int stamina, int luck, int age, int hunger) {
         super(field, location);
+        rand = Randomizer.getRandom();
         this.strength = strength;
         this.stamina = stamina;
         this.luck = luck;
@@ -28,11 +29,15 @@ public abstract class Humanoid extends Agent{
     }
     protected Humanoid(Field field,Location location){
         super(field, location);
-        Random rand = Randomizer.getRandom();
+        rand = Randomizer.getRandom();
         this.strength = rand.nextInt(10);
         this.stamina = rand.nextInt(10);
         this.luck = rand.nextInt(10);
         this.age = rand.nextInt(10);
         this.hunger = rand.nextInt(10);
+    }
+    protected int battle(){
+        System.out.println(1+strength);
+        return rand.nextInt(1+strength);
     }
 }

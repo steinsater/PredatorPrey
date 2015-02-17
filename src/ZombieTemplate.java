@@ -9,7 +9,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class ZombieTemplate extends Agent
+public class ZombieTemplate extends Humanoid
 {
     // Characteristics shared by all foxes (class variables).
     
@@ -47,6 +47,16 @@ public class ZombieTemplate extends Agent
         }
     }
 
+    public ZombieTemplate(Field field,Location location,int strength, int stamina, int luck, int age, int hunger){
+        super(field,location,strength,stamina,luck,age,hunger);
+    }
+
+    public static ZombieTemplate makeZombie(Humanoid human){
+        ZombieTemplate zomb = new ZombieTemplate(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
+        human.setDead();
+        return zomb;
+    }
+
     /**
      * This is what the fox does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
@@ -56,11 +66,11 @@ public class ZombieTemplate extends Agent
      */
     public void act(List<Agent> newZombies)
     {
-        incrementAge();
+        //incrementAge();
         if(isAlive()) {
                       
             // Move towards a source of food if found.
-            Location newLocation = findHuman();
+            Location newLocation = findHuman(newZombies);
             if(newLocation == null) { 
                 // No food found - try to move to a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
@@ -71,7 +81,8 @@ public class ZombieTemplate extends Agent
             }
             else {
                 // Overcrowding.
-                setDead();
+                //setDead();
+
             }
         }
     }
@@ -103,7 +114,7 @@ public class ZombieTemplate extends Agent
      * Only the first live rabbit is eaten.
      * @return Where food was found, or null if it wasn't.
      */
-    private Location findHuman()
+    private Location findHuman(List<Agent> newZombies)
     {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
@@ -115,12 +126,19 @@ public class ZombieTemplate extends Agent
                 HumanTemplate human = (HumanTemplate) humanoid;
                 //ZombieTemplate zombie = (ZombieTemplate) humanoid;
                 if(human.isAlive()) { 
-                    human.setDead();
-                    return where;
+                    //human.setDead();
+                    //return where;
+                    attemptEat(human,newZombies);
                 }
             }
         }
         return null;
+    }
+
+    private void attemptEat(HumanTemplate human,List<Agent> newZombies){
+        if(battle()>human.battle()){
+            newZombies.add(makeZombie(human));
+        }
     }
    
   
