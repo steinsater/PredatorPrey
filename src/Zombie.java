@@ -9,7 +9,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class ZombieTemplate extends Humanoid
+public class Zombie extends Humanoid
 {
     // Characteristics shared by all foxes (class variables).
     
@@ -36,7 +36,7 @@ public class ZombieTemplate extends Humanoid
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public ZombieTemplate(boolean randomAge, Field field, Location location)
+    public Zombie(boolean randomAge, Field field, Location location)
     {
         super(field, location);
         if(randomAge) {
@@ -49,12 +49,12 @@ public class ZombieTemplate extends Humanoid
         }
     }
 
-    public ZombieTemplate(Field field,Location location,int strength, int stamina, int luck, int age, int hunger){
+    public Zombie(Field field, Location location, int strength, int stamina, int luck, int age, int hunger){
         super(field, location, strength, stamina, luck, age, hunger);
     }
 
-    public static ZombieTemplate makeZombie(Humanoid human){
-        ZombieTemplate zomb = new ZombieTemplate(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
+    public static Zombie makeZombie(Humanoid human){
+        Zombie zomb = new Zombie(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
         human.setDead();
         return zomb;
     }
@@ -127,9 +127,9 @@ public class ZombieTemplate extends Humanoid
         while(it.hasNext()) {
             Location where = it.next();
             Object humanoid = field.getObjectAt(where);
-            if(humanoid instanceof HumanTemplate) {
-                HumanTemplate human = (HumanTemplate) humanoid;
-                //ZombieTemplate zombie = (ZombieTemplate) humanoid;
+            if(humanoid instanceof Human) {
+                Human human = (Human) humanoid;
+                //Zombie zombie = (Zombie) humanoid;
                 if(human.isAlive()) { 
                     //human.setDead();
                     //return where;
@@ -140,7 +140,7 @@ public class ZombieTemplate extends Humanoid
         return null;
     }
 
-    private void attemptEat(HumanTemplate human,List<Agent> newZombies){
+    private void attemptEat(Human human,List<Agent> newZombies){
         if(battle()>human.battle()){
             newZombies.add(makeZombie(human));
         }

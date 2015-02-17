@@ -68,13 +68,13 @@ public class Simulator
         views = new ArrayList<SimulatorView>();
         
         SimulatorView view = new GridView(depth, width);
-        view.setColor(HumanTemplate.class, Color.ORANGE);
-        view.setColor(ZombieTemplate.class, Color.BLUE);
+        view.setColor(Human.class, Color.ORANGE);
+        view.setColor(Zombie.class, Color.BLUE);
         views.add(view);
         
         view = new GraphView(500, 150, 500);
-        view.setColor(HumanTemplate.class, Color.BLACK);
-        view.setColor(ZombieTemplate.class, Color.RED);
+        view.setColor(Human.class, Color.BLACK);
+        view.setColor(Zombie.class, Color.RED);
         views.add(view);
 
         // Setup a valid starting point.
@@ -164,12 +164,12 @@ public class Simulator
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    ZombieTemplate zombie = new ZombieTemplate(true, field, location);
+                    Zombie zombie = new Zombie(true, field, location);
                     humanoids.add(zombie);
                 }
                 else if(rand.nextDouble() <= HUMAN_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    HumanTemplate human = new HumanTemplate(true, field, location);
+                    Human human = new Human(true, field, location);
                     humanoids.add(human);
                 }
                 // else leave the location empty.

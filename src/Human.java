@@ -8,7 +8,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class HumanTemplate extends Humanoid
+public class Human extends Humanoid
 {
     // Characteristics shared by all rabbits (class variables).
 
@@ -44,7 +44,7 @@ public class HumanTemplate extends Humanoid
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public HumanTemplate(boolean randomAge, Field field, Location location)
+    public Human(boolean randomAge, Field field, Location location)
     {
         super(field, location);
         age = 0;
@@ -114,7 +114,7 @@ public class HumanTemplate extends Humanoid
         //Object o = field.getObjectAt(randomLocation); //&& o != null
         if ((free.size() > 0) && canBreed() && earlierbirths<MAX_LITTER_SIZE){
             Location loc = free.remove(0);
-            HumanTemplate young = new HumanTemplate(false, field, loc);
+            Human young = new Human(false, field, loc);
             newHumanoids.add(young);
             born++;
             earlierbirths++;
