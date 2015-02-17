@@ -19,9 +19,9 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 256;//80;
     // The probability that a fox will be created in any given grid position.
-    private static final double ZOMBIE_CREATION_PROBABILITY = 0.002;
+    private static final double ZOMBIE_CREATION_PROBABILITY = 0.005;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double HUMAN_CREATION_PROBABILITY = 0.3;
+    private static final double HUMAN_CREATION_PROBABILITY = 0.9;
 
     // List of humanoids in the field.
     private List<Agent> humanoids;
@@ -87,7 +87,7 @@ public class Simulator
      */
     public void runLongSimulation()
     {
-        simulate(4000);
+        simulate(9000);
     }
     
     /**

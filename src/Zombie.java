@@ -74,18 +74,20 @@ public class Zombie extends Humanoid
                       
             // Move towards a source of food if found.
             Location newLocation = findHuman(newZombies);
-            if(newLocation == null) { 
-                // No food found - try to move to a free location.
-                newLocation = getField().freeAdjacentLocation(getLocation());
-            }
-            // See if it was possible to move.
-            if(newLocation != null) {
-                setLocation(newLocation);
-            }
-            else {
-                // Overcrowding.
-                //setDead();
+            if(isAlive()){
+                if(newLocation == null) {
+                    // No food found - try to move to a free location.
+                    newLocation = getField().freeAdjacentLocation(getLocation());
+                }
+                // See if it was possible to move.
+                if(newLocation != null) {
+                    setLocation(newLocation);
+                }
+                else {
+                    // Overcrowding.
+                    //setDead();
 
+                }
             }
         }
     }
@@ -143,6 +145,8 @@ public class Zombie extends Humanoid
     private void attemptEat(Human human,List<Agent> newZombies){
         if(battle()>human.battle()){
             newZombies.add(makeZombie(human));
+        }else{
+            setDead();
         }
     }
    
