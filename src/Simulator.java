@@ -94,7 +94,7 @@ public class Simulator
      */
     public void simulate(int numSteps)
     {
-        for(int step = 1; step <= numSteps;step++){ //&& views.get(0).isViable(field); step++) {
+        for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
             simulateOneStep();
         }
     }
