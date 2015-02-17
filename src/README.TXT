@@ -1,5 +1,6 @@
 Project: foxes-and-rabbits-graph
 Authors: Michael Kölling and David J. Barnes
+Edit: Erik, Stein og Ole-Martin
 
 This project is part of the material for chapter 10 of the book
 

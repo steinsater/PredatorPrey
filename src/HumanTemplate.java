@@ -48,13 +48,13 @@ public class HumanTemplate extends Agent
     /**
      * This is what the rabbit does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newHumanoids A list to return newly born rabbits.
      */
-    public void act(List<Agent> newRabbits)
+    public void act(List<Agent> newHumanoids)
     {
         incrementAge();
         if(isAlive()) {
-            giveBirth(newRabbits);            
+            giveBirth(newHumanoids);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
@@ -82,9 +82,9 @@ public class HumanTemplate extends Agent
     /**
      * Check whether or not this rabbit is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newHumanoids A list to return newly born rabbits.
      */
-    private void giveBirth(List<Agent> newRabbits)
+    private void giveBirth(List<Agent> newHumanoids)
     {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -94,7 +94,7 @@ public class HumanTemplate extends Agent
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             HumanTemplate young = new HumanTemplate(false, field, loc);
-            newRabbits.add(young);
+            newHumanoids.add(young);
         }
     }
         
