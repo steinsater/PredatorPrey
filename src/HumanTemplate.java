@@ -8,7 +8,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class HumanTemplate extends Agent
+public class HumanTemplate extends Humanoid
 {
     // Characteristics shared by all rabbits (class variables).
 
