@@ -29,7 +29,7 @@ public class HumanTemplate extends Agent
     
     // The humans's age.
     private int age;
-    private double deathProbability = 0.05;
+    private double deathProbability = 0.20;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -80,9 +80,12 @@ public class HumanTemplate extends Agent
         if(age > MAX_AGE) {
             setDead();
         }
+        deathProbability = (deathProbability + 0.01);
+        // Checks if the humans age is over the age set for death by natural causes
         if (age > NATURALCAUSE_AGE && rand.nextDouble() <= deathProbability) {
             setDead();
         }
+        
     }
     
     /**
