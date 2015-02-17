@@ -63,7 +63,7 @@ public abstract class Agent
         alive = true;
         this.field = field;
         setLocation(location);
-       
+       // INSERT CODE HERE
     }
 
     /**
