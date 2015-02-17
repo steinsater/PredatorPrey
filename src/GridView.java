@@ -58,20 +58,20 @@ public class GridView extends JFrame implements SimulatorView
     
     /**
      * Define a color to be used for a given class of animal.
-     * @param animalClass The animal's Class object.
+     * @param humanoidClass The humanoids Class object.
      * @param color The color to be used for the given class.
      */
-    public void setColor(Class animalClass, Color color)
+    public void setColor(Class humanoidClass, Color color)
     {
-        colors.put(animalClass, color);
+        colors.put(humanoidClass, color);
     }
 
     /**
      * @return The color to be used for a given class of animal.
      */
-    private Color getColor(Class animalClass)
+    private Color getColor(Class humanoidClass)
     {
-        Color col = colors.get(animalClass);
+        Color col = colors.get(humanoidClass);
         if(col == null) {
             // no color defined for this class
             return UNKNOWN_COLOR;
@@ -99,10 +99,10 @@ public class GridView extends JFrame implements SimulatorView
 
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                Object animal = field.getObjectAt(row, col);
-                if(animal != null) {
-                    stats.incrementCount(animal.getClass());
-                    fieldView.drawMark(col, row, getColor(animal.getClass()));
+                Object humanoid = field.getObjectAt(row, col);
+                if(humanoid != null) {
+                    stats.incrementCount(humanoid.getClass());
+                    fieldView.drawMark(col, row, getColor(humanoid.getClass()));
                 }
                 else {
                     fieldView.drawMark(col, row, EMPTY_COLOR);

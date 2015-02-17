@@ -19,9 +19,9 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 256;//80;
     // The probability that a fox will be created in any given grid position.
-    private static final double ZOMBIE_CREATION_PROBABILITY = 0.02;
+    private static final double ZOMBIE_CREATION_PROBABILITY = 0.002;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double HUMAN_CREATION_PROBABILITY = 0.08;    
+    private static final double HUMAN_CREATION_PROBABILITY = 0.3;
 
     // List of humanoids in the field.
     private List<Agent> humanoids;
@@ -164,13 +164,13 @@ public class Simulator
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    ZombieTemplate fox = new ZombieTemplate(true, field, location);
-                    humanoids.add(fox);
+                    ZombieTemplate zombie = new ZombieTemplate(true, field, location);
+                    humanoids.add(zombie);
                 }
                 else if(rand.nextDouble() <= HUMAN_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    HumanTemplate rabbit = new HumanTemplate(true, field, location);
-                    humanoids.add(rabbit);
+                    HumanTemplate human = new HumanTemplate(true, field, location);
+                    humanoids.add(human);
                 }
                 // else leave the location empty.
             }
