@@ -68,7 +68,7 @@ public class ZombieTemplate extends Agent
         if(isAlive()) {
             giveBirth(newFoxes);            
             // Move towards a source of food if found.
-            Location newLocation = findFood();
+            Location newLocation = findHuman();
             if(newLocation == null) { 
                 // No food found - try to move to a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
@@ -111,18 +111,18 @@ public class ZombieTemplate extends Agent
      * Only the first live rabbit is eaten.
      * @return Where food was found, or null if it wasn't.
      */
-    private Location findFood()
+    private Location findHuman()
     {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
         while(it.hasNext()) {
             Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof HumanTemplate) {
-                HumanTemplate rabbit = (HumanTemplate) animal;
-                if(rabbit.isAlive()) { 
-                    rabbit.setDead();
+            Object humanoid = field.getObjectAt(where);
+            if(humanoid instanceof HumanTemplate) {
+                HumanTemplate human = (HumanTemplate) humanoid;
+                if(human.isAlive()) { 
+                    human.setDead();
                     foodLevel = RABBIT_FOOD_VALUE;
                     return where;
                 }
