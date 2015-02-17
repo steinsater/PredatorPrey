@@ -27,6 +27,9 @@ public class Simulator
     private List<Agent> humanoids;
     // The current state of the field.
     private Field field;
+
+
+
     // The current step of the simulation.
     private int step;
     // A graphical view of the simulation.
@@ -173,4 +176,5 @@ public class Simulator
             }
         }
     }
+
 }

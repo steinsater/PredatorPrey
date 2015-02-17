@@ -15,14 +15,8 @@ public class ZombieTemplate extends Agent
     
    
     // The age to which a fox can live.
-    private static final int MAX_AGE = 150;
-    // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
-    // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a fox can go before it has to eat again.
-    private static final int RABBIT_FOOD_VALUE = 9;
+    private static final int MAX_AGE = 2000;
+    private static final int HUMAN_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -45,14 +39,14 @@ public class ZombieTemplate extends Agent
         super(field, location);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
-            foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
+            foodLevel = rand.nextInt(HUMAN_FOOD_VALUE);
         }
         else {
             age = 0;
-            foodLevel = RABBIT_FOOD_VALUE;
+            foodLevel = HUMAN_FOOD_VALUE;
         }
     }
-    
+
     /**
      * This is what the fox does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
@@ -63,7 +57,6 @@ public class ZombieTemplate extends Agent
     public void act(List<Agent> newZombies)
     {
         incrementAge();
-        incrementHunger();
         if(isAlive()) {
                       
             // Move towards a source of food if found.
@@ -122,7 +115,7 @@ public class ZombieTemplate extends Agent
                 HumanTemplate human = (HumanTemplate) humanoid;
                 //ZombieTemplate zombie = (ZombieTemplate) humanoid;
                 if(human.isAlive()) { 
-                    human.setZombie();
+                    human.setDead();
                     return where;
                 }
             }
