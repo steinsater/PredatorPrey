@@ -12,11 +12,13 @@ public class HumanTemplate extends Agent
 {
     // Characteristics shared by all rabbits (class variables).
 
-    // The age at which a rabbit can start to breed.
+    // The age at which a human can start to breed.
     private static final int BREEDING_AGE = 14;
-    // The age to which a rabbit can live.
+    // The age to which a human can live.
     private static final int MAX_AGE = 100;
-    // The likelihood of a rabbit breeding.
+    // The age a human starts to die of natural causes
+    private static final int NATURALCAUSE_AGE = 60;
+    // The likelihood of a human breeding.
     private static final double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
@@ -25,8 +27,9 @@ public class HumanTemplate extends Agent
     
     // Individual characteristics (instance fields).
     
-    // The rabbit's age.
+    // The humans's age.
     private int age;
+    private double deathProbability = 0.05;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -75,6 +78,9 @@ public class HumanTemplate extends Agent
     {
         age++;
         if(age > MAX_AGE) {
+            setDead();
+        }
+        if (age > NATURALCAUSE_AGE && rand.nextDouble() <= deathProbability) {
             setDead();
         }
     }
