@@ -85,12 +85,13 @@ public class HumanTemplate extends Humanoid
 
         if(days % 365 == 0){
             age++;
+            deathProbability = (deathProbability + 0.01);
         }
 
         if(age > MAX_AGE) {
             setDead();
         }
-        deathProbability = (deathProbability + 0.01);
+
         // Checks if the humans age is over the age set for death by natural causes
         if (age > NATURALCAUSE_AGE && rand.nextDouble() <= deathProbability) {
             setDead();
@@ -110,8 +111,8 @@ public class HumanTemplate extends Humanoid
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         Location randomLocation = field.randomAdjacentLocation(getLocation());
-        Object o = field.getObjectAt(randomLocation);
-        if ((free.size() > 0) && canBreed() && o != null && earlierbirths<MAX_LITTER_SIZE){
+        //Object o = field.getObjectAt(randomLocation); //&& o != null
+        if ((free.size() > 0) && canBreed() && earlierbirths<MAX_LITTER_SIZE){
             Location loc = free.remove(0);
             HumanTemplate young = new HumanTemplate(false, field, loc);
             newHumanoids.add(young);
@@ -121,7 +122,9 @@ public class HumanTemplate extends Humanoid
 
     }
         
+    private void attack(){
 
+    }
 
 
     /**
