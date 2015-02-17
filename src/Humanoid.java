@@ -12,11 +12,11 @@ import java.util.Random;
  */
 public abstract class Humanoid extends Agent{
     
-    private int strength;
-    private int stamina;
-    private int luck;
-    private int age;
-    private int hunger;
+    protected int strength;
+    protected int stamina;
+    protected int luck;
+    protected int age;
+    protected int hunger;
 
     protected Humanoid(Field field, Location location, int strength, int stamina, int luck, int age, int hunger) {
         super(field, location);
