@@ -57,14 +57,6 @@ public abstract class Agent
             field = null;
         }
     }
-    
-    protected void setZombie()
-    {
-        alive = true;
-        this.field = field;
-        setLocation(location);
-       // INSERT CODE HERE
-    }
 
     /**
      * Return the humanoid's location.
