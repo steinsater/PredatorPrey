@@ -107,6 +107,9 @@ public class HumanTemplate extends Agent
             Location loc = free.remove(0);
             HumanTemplate young = new HumanTemplate(false, field, loc);
             newHumanoids.add(young);
+            
+            //fix the rest
+            
         }
         /*int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
