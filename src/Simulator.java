@@ -64,15 +64,15 @@ public class Simulator
 
         views = new ArrayList<SimulatorView>();
         
-//        SimulatorView view = new GridView(depth, width);
-//        view.setColor(HumanTemplate.class, Color.ORANGE);
-//        view.setColor(ZombieTemplate.class, Color.BLUE);
-//        views.add(view);
+        SimulatorView view = new GridView(depth, width);
+        view.setColor(HumanTemplate.class, Color.ORANGE);
+        view.setColor(ZombieTemplate.class, Color.BLUE);
+        views.add(view);
         
-//        SimulatorView view = new GraphView(500, 150, 500);
-//        view.setColor(HumanTemplate.class, Color.BLACK);
-//        view.setColor(ZombieTemplate.class, Color.RED);
-//        views.add(view);
+        view = new GraphView(500, 150, 500);
+        view.setColor(HumanTemplate.class, Color.BLACK);
+        view.setColor(ZombieTemplate.class, Color.RED);
+        views.add(view);
 
         // Setup a valid starting point.
         reset();
