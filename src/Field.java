@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * Represent a rectangular grid of field positions.
- * Each position is able to store a single animal.
+ * Each position is able to store a single humanoid.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
@@ -55,32 +55,32 @@ public class Field
     }
     
     /**
-     * Place an animal at the given location.
-     * If there is already an animal at the location it will
-     * be lost.
-     * @param animal The animal to be placed.
+     * Place a humanoid at the given location.
+     * If there is already an humanoid at the location it will
+ be lost.
+     * @param humanoid The humanoid to be placed.
      * @param row Row coordinate of the location.
      * @param col Column coordinate of the location.
      */
-    public void place(Object animal, int row, int col)
+    public void place(Object humanoid, int row, int col)
     {
-        place(animal, new Location(row, col));
+        place(humanoid, new Location(row, col));
     }
     
     /**
-     * Place an animal at the given location.
-     * If there is already an animal at the location it will
-     * be lost.
-     * @param animal The animal to be placed.
-     * @param location Where to place the animal.
+     * Place an humanoid at the given location.
+     * If there is already an humanoid at the location it will
+ be lost.
+     * @param humanoid The humanoid to be placed.
+     * @param location Where to place the humanoid.
      */
-    public void place(Object animal, Location location)
+    public void place(Object humanoid, Location location)
     {
-        field[location.getRow()][location.getCol()] = animal;
+        field[location.getRow()][location.getCol()] = humanoid;
     }
     
     /**
-     * Return the animal at the given location, if any.
+     * Return the humanoid at the given location, if any.
      * @param location Where in the field.
      * @return The animal at the given location, or null if there is none.
      */
@@ -90,7 +90,7 @@ public class Field
     }
     
     /**
-     * Return the animal at the given location, if any.
+     * Return the humanoid at the given location, if any.
      * @param row The desired row.
      * @param col The desired column.
      * @return The animal at the given location, or null if there is none.

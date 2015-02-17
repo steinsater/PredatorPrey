@@ -10,13 +10,13 @@ public abstract class Agent
 {
     // Whether the animal is alive or not.
     private boolean alive;
-    // The animal's field.
+    // The humanoid's field.
     private Field field;
-    // The animal's position in the field.
+    // The humanoid's position in the field.
     private Location location;
     
     /**
-     * Create a new animal at location in field.
+     * Create a new humanoid at location in field.
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
@@ -29,15 +29,15 @@ public abstract class Agent
     }
     
     /**
-     * Make this animal act - that is: make it do
+     * Make this humanoid act - that is: make it do
      * whatever it wants/needs to do.
-     * @param newAnimals A list to receive newly born animals.
+     * @param newHumanoids A list to receive newly born animals.
      */
-    abstract public void act(List<Agent> newAnimals);
+    abstract public void act(List<Agent> newHumanoids);
 
     /**
-     * Check whether the animal is alive or not.
-     * @return true if the animal is still alive.
+     * Check whether the humanoid is alive or not.
+     * @return true if the humanoid is still alive.
      */
     protected boolean isAlive()
     {
@@ -59,8 +59,8 @@ public abstract class Agent
     }
 
     /**
-     * Return the animal's location.
-     * @return The animal's location.
+     * Return the humanoid's location.
+     * @return The humanoid's location.
      */
     protected Location getLocation()
     {
@@ -68,7 +68,7 @@ public abstract class Agent
     }
     
     /**
-     * Place the animal at the new location in the given field.
+     * Place the humanoid at the new location in the given field.
      * @param newLocation The animal's new location.
      */
     protected void setLocation(Location newLocation)
@@ -81,8 +81,8 @@ public abstract class Agent
     }
     
     /**
-     * Return the animal's field.
-     * @return The animal's field.
+     * Return the humanoid's field.
+     * @return The humanoid's field.
      */
     protected Field getField()
     {
