@@ -2,15 +2,15 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a human.
+ * Humans age, move, breed, and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
 public class Human extends Humanoid
 {
-    // Characteristics shared by all rabbits (class variables).
+    // Characteristics shared by all humans (class variables).
 
     // The age at which a human can start to breed.
     private static final int MIN_BREEDING_AGE = 18;

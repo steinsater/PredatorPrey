@@ -97,6 +97,7 @@ public class Simulator
      */
     public void simulate(int numSteps)
     {
+
         for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
             simulateOneStep();
         }
@@ -121,8 +122,7 @@ public class Simulator
                 it.remove();
             }
         }
-               
-        // Add the newly born foxes and rabbits to the main lists.
+
         humanoids.addAll(newHumanoids);
 
         updateViews();
