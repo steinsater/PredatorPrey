@@ -113,7 +113,7 @@ public class Simulator
             simulateOneStep();
             stats.reset();
             GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population.csv");
-            GenerateCSV.fileAppendBuffer(""+step+","+Human.getBorn()+","+Human.getDeaths()+"\n","newBorns");
+            GenerateCSV.fileAppendBuffer(""+step+","+Human.getBorn()+","+Human.getDeaths()+"\n","newBorns.csv");
         }
         GenerateCSV.generateCsvFiles();
     }
