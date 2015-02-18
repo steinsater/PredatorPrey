@@ -9,21 +9,13 @@ public class GenerateCSV
 
     public GenerateCSV() {
         out = new ArrayList<String>();
+        out.add("Zombie,Human\n");
         stats = new FieldStats();
     }
 
     public void savePopulationCount(Field field){
         stats.reset();
-//        for(int row = 0; row < field.getDepth(); row++) {
-//            for(int col = 0; col < field.getWidth(); col++) {
-//                Object humanoid = field.getObjectAt(row, col);
-//                if(humanoid != null) {
-//                    stats.incrementCount(humanoid.getClass());
-//                }
-//            }
-//        }
-//        stats.countFinished();
-        out.add(stats.getPopulationDetails(field)+"\n");
+        out.add(stats.getPopulationCount(field,Zombie.class)+","+stats.getPopulationCount(field,Human.class)+"\n");
     }
 
     public void generateCsvFile(String sFileName)
