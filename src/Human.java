@@ -13,20 +13,25 @@ public class Human extends Humanoid
     // Characteristics shared by all humans (class variables).
 
     // The age at which a human can start to breed.
-    private static final int MIN_BREEDING_AGE = 18;
+    private static final int MIN_BREEDING_AGE = 30;
     // The age at which a human can start to breed.
-    private static final int MAX_BREEDING_AGE = 40;
+    private static final int MAX_BREEDING_AGE = 50;
     // The age to which a human can live.
     private static final int MAX_AGE = 100;
     // The age a human starts to die of natural causes
     private static final int NATURALCAUSE_AGE = 60;
     // The maximum number of births.
     private static final int MAX_BIRTHS = 8;
-    private static int earlierbirths = 0;
+    private int earlierbirths = 0;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     private static int born = 0;
+    private static int deaths = 0;
+
+    public static int getBorn() {
+        return born;
+    }
 
     private static int days = 1;
     
@@ -49,10 +54,22 @@ public class Human extends Humanoid
         super(field, location);
         age = 0;
         if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
+            age = 10+rand.nextInt(15);
         }
     }
-    
+
+    public static int getDeaths() {
+        return deaths;
+    }
+
+    @Override
+    protected void setDead(String reason) {
+        super.setDead(reason);
+        deaths++;
+
+        GenerateCSV.fileAppendBuffer(age+","+reason+"\n","humanDeaths.csv");
+    }
+
     /**
      * This is what the human does most of the time - it runs
      * around. Sometimes it will breed or die of old age.
@@ -71,7 +88,7 @@ public class Human extends Humanoid
             }
             else {
                 // Overcrowding.
-                setDead();
+                setDead("Overcrowding");
             }
         }
     }
@@ -89,12 +106,12 @@ public class Human extends Humanoid
         }
 
         if(age > MAX_AGE) {
-            setDead();
+            setDead("Old age");
         }
 
         // Checks if the humans age is over the age set for death by natural causes
         if (age > NATURALCAUSE_AGE && rand.nextDouble() <= deathProbability) {
-            setDead();
+            setDead("Natural causes");
         }
         
     }

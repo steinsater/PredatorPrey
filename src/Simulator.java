@@ -94,7 +94,7 @@ public class Simulator
     public void runLongSimulation()
     {
         long time = System.currentTimeMillis();
-        simulate(900);
+        simulate(100);
         System.out.println(System.currentTimeMillis()-time);
     }
     
@@ -112,7 +112,8 @@ public class Simulator
         for(int step = 1; step <= numSteps /*&& views.get(0).isViable(field)*/; step++) {
             simulateOneStep();
             stats.reset();
-            GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population");
+            GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population.csv");
+            GenerateCSV.fileAppendBuffer(""+step+","+Human.getBorn()+","+Human.getDeaths()+"\n","newBorns");
         }
         GenerateCSV.generateCsvFiles();
     }
@@ -181,7 +182,7 @@ public class Simulator
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Zombie zombie = new Zombie(true, field, location);
+                    Zombie zombie = new Zombie(false, field, location);
                     humanoids.add(zombie);
                 }
                 else if(rand.nextDouble() <= HUMAN_CREATION_PROBABILITY) {

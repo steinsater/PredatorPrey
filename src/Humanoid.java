@@ -33,7 +33,7 @@ public abstract class Humanoid extends Agent{
         this.strength = rand.nextInt(10);
         this.stamina = rand.nextInt(10);
         this.luck = rand.nextInt(10);
-        this.age = rand.nextInt(10);
+        this.age = 16+rand.nextInt(50);
         this.hunger = rand.nextInt(10);
     }
     protected int battle(){

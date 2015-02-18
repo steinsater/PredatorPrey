@@ -26,7 +26,7 @@ public class Zombie extends Humanoid
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
 
-    private static int days = 1;
+    private int days = 1;
 
     /**
      * Create a fox. A fox can be created as a new born (age zero
@@ -56,7 +56,7 @@ public class Zombie extends Humanoid
 
     public static Zombie makeZombie(Humanoid human){
         Zombie zomb = new Zombie(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
-        human.setDead();
+        human.setDead("Became Zombie");
         return zomb;
     }
 
@@ -102,7 +102,7 @@ public class Zombie extends Humanoid
             zombieAge++;
         }
         if(zombieAge > MAX_AGE) {
-            setDead();
+            setDead("Decomposed");
         }
     }
     
@@ -113,7 +113,7 @@ public class Zombie extends Humanoid
     {
         foodLevel--;
         if(foodLevel <= 0) {
-            setDead();
+            setDead("Starvation");
         }
     }
     
@@ -143,19 +143,25 @@ public class Zombie extends Humanoid
         return null;
     }
 
+    @Override
+    protected void setDead(String reason) {
+        super.setDead(reason);
+        GenerateCSV.fileAppendBuffer(zombieAge+","+age+","+reason+"\n","zombieDeaths.csv");
+    }
+
     private void attemptEat(Human human,List<Agent> newZombies){
 
         if(battle()>human.battle()){
             newZombies.add(makeZombie(human));
         }else{
-            setDead();
+            setDead("Killed by human");
         }
     }
 
     @Override
     protected int battle() {
 
-        return rand.nextInt(1+((strength+stamina)*4/(1+zombieAge))*18/(1+age));
+        return rand.nextInt(1+((strength+stamina)*18/(1+age+zombieAge)));
 
     }
 }
