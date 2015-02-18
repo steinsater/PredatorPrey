@@ -21,7 +21,7 @@ public class Human extends Humanoid
     // The age a human starts to die of natural causes
     private static final int NATURALCAUSE_AGE = 60;
     // The maximum number of births.
-    private static final int MAX_BIRTHS = 8;
+    private static final int MAX_BIRTHS = 2;
     private int earlierbirths = 0;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -52,9 +52,9 @@ public class Human extends Humanoid
     public Human(boolean randomAge, Field field, Location location)
     {
         super(field, location);
-        age = 0;
+        age = 10+rand.nextInt(15);
         if(randomAge) {
-            age = 10+rand.nextInt(15);
+            age = rand.nextInt(MAX_AGE);
         }
     }
 
