@@ -167,10 +167,10 @@ public class Field
             int row = location.getRow();
             int col = location.getCol();
             for(int roffset = -1; roffset <= 1; roffset++) {
-                int nextRow = row + roffset;
+                int nextRow = (row + roffset)%depth;
                 if(nextRow >= 0 && nextRow < depth) {
                     for(int coffset = -1; coffset <= 1; coffset++) {
-                        int nextCol = col + coffset;
+                        int nextCol = (col + coffset)%width;
                         // Exclude invalid locations and the original location.
                         if(nextCol >= 0 && nextCol < width && (roffset != 0 || coffset != 0)) {
                             locations.add(new Location(nextRow, nextCol));
