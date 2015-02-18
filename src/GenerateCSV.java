@@ -5,7 +5,8 @@ public class GenerateCSV
 {
     public static void main(String [] args)
     {
-        generateCsvFile("c:\\test.csv");
+        //HUSK Å ENDRE FOLDER
+        generateCsvFile("C:/Users/Ole-Martin/Desktop/test.csv");
     }
 
     private static void generateCsvFile(String sFileName)
@@ -14,10 +15,10 @@ public class GenerateCSV
         {
             FileWriter writer = new FileWriter(sFileName);
 
-            writer.append();
+            writer.append("hei");
             writer.append(',');
-            //writer.append("Age");
-            //writer.append('\n');
+            writer.append("Age");
+            writer.append('\n');
 
             writer.flush();
             writer.close();

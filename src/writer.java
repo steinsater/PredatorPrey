@@ -11,7 +11,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 public class writer {
-
     public void writing() {
 
         try {
@@ -30,8 +29,7 @@ public class writer {
     public static void main(String[]args) {
         writer write = new writer();
         write.writing();
+
     }
-
-
 
 }
