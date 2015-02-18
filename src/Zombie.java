@@ -144,6 +144,7 @@ public class Zombie extends Humanoid
     }
 
     private void attemptEat(Human human,List<Agent> newZombies){
+
         if(battle()>human.battle()){
             newZombies.add(makeZombie(human));
         }else{

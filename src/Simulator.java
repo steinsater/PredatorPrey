@@ -30,6 +30,7 @@ public class Simulator
 
     private int[][] agearray = new int[2][9000];
 
+    private FieldStats stats;
     private GenerateCSV writeToFile;
 
 
@@ -68,12 +69,12 @@ public class Simulator
         
         humanoids = new ArrayList<Agent>();
         field = new Field(depth, width);
-        writeToFile = new GenerateCSV();
+        stats = new FieldStats();
 
         views = new ArrayList<SimulatorView>();
 
         SimulatorView view = new GridView(depth, width);
-        view.setColor(Human.class, Color.GREEN);
+        view.setColor(Human.class, Color.BLACK);
         view.setColor(Zombie.class, Color.RED);
         views.add(view);
 
@@ -93,7 +94,7 @@ public class Simulator
     public void runLongSimulation()
     {
         long time = System.currentTimeMillis();
-        simulate(9000);
+        simulate(900);
         System.out.println(System.currentTimeMillis()-time);
     }
     
@@ -108,11 +109,12 @@ public class Simulator
         //int[] humancount = new int [numSteps];
 
 
-        for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
+        for(int step = 1; step <= numSteps /*&& views.get(0).isViable(field)*/; step++) {
             simulateOneStep();
-            writeToFile.savePopulationCount(field);
+            stats.reset();
+            GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population");
         }
-        writeToFile.generateCsvFile("test.csv");
+        GenerateCSV.generateCsvFiles();
     }
     
     /**

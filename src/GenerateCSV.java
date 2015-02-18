@@ -1,39 +1,37 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GenerateCSV
 {
-    ArrayList<String> out;
-    FieldStats stats;
+    static HashMap<String,ArrayList<String>> files = new HashMap<String,ArrayList<String>>();
 
-    public GenerateCSV() {
-        out = new ArrayList<String>();
-        out.add("Zombie,Human\n");
-        stats = new FieldStats();
-    }
-
-    public void savePopulationCount(Field field){
-        stats.reset();
-        out.add(stats.getPopulationCount(field,Zombie.class)+","+stats.getPopulationCount(field,Human.class)+"\n");
-    }
-
-    public void generateCsvFile(String sFileName)
-    {
-        try
-        {
-            FileWriter writer = new FileWriter(sFileName);
-
-            for(String line:out){
-                writer.append(line);
-            }
-
-            writer.flush();
-            writer.close();
+    public static void fileAppendBuffer(String line,String sFileName){
+        if(files.get(sFileName)==null){
+            files.put(sFileName,new ArrayList<String>());
         }
-        catch(IOException e)
-        {
-            e.printStackTrace();
+        files.get(sFileName).add(line);
+    }
+
+    public static void generateCsvFiles()
+    {
+        for(String file:files.keySet()){
+            try
+            {
+                FileWriter writer = new FileWriter(file);
+
+                for(String line:files.get(file)){
+                    writer.append(line);
+                }
+
+                writer.flush();
+                writer.close();
+                }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
