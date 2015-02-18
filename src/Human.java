@@ -118,6 +118,7 @@ public class Human extends Humanoid
             newHumanoids.add(young);
             born++;
             earlierbirths++;
+            numberBirth++;
         }
 
     }

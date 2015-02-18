@@ -9,7 +9,7 @@ This we need to do:
     - Menneske til zombie og nyfødte menneske
 
 This we could do:
--
+- Få zombiene til å starte i et hjørne, og ikkje tilfeldig
 
 This we don't need to do:
 - Build a spaceship

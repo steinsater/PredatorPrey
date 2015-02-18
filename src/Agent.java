@@ -14,6 +14,8 @@ public abstract class Agent
     private Field field;
     // The humanoid's position in the field.
     private Location location;
+
+    public int numberBirth = 0;
     
     /**
      * Create a new humanoid at location in field.
@@ -88,4 +90,16 @@ public abstract class Agent
     {
         return field;
     }
+
+
+    public int getNumberBirth() {
+        return numberBirth;
+    }
+
+    public void setNumberBirth(int numberBirth) {
+        this.numberBirth = numberBirth;
+    }
+
+
+
 }

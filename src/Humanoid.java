@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 import java.util.Random;
 
 /**
@@ -17,6 +18,7 @@ public abstract class Humanoid extends Agent{
     protected int luck;
     protected int age;
     protected int hunger;
+
 
     protected Humanoid(Field field, Location location, int strength, int stamina, int luck, int age, int hunger) {
         super(field, location);
@@ -40,4 +42,6 @@ public abstract class Humanoid extends Agent{
         System.out.println(1+strength);
         return rand.nextInt(1+strength);
     }
+
+
 }
