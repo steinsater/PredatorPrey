@@ -54,9 +54,9 @@ public class Human extends Humanoid
     }
     
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the human does most of the time - it runs
      * around. Sometimes it will breed or die of old age.
-     * @param newHumanoids A list to return newly born rabbits.
+     * @param newHumanoids A list to return newly born humans.
      */
     public void act(List<Agent> newHumanoids)
     {
