@@ -21,7 +21,7 @@ public class Human extends Humanoid
     // The age a human starts to die of natural causes
     private static final int NATURALCAUSE_AGE = 60;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 40;
+    private static final int MAX_BIRTHS = 8;
     private static int earlierbirths = 0;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -106,13 +106,13 @@ public class Human extends Humanoid
      */
     private void giveBirth(List<Agent> newHumanoids)
     {
-        // New rabbits are born into adjacent locations.
+        // New humans are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         Location randomLocation = field.randomAdjacentLocation(getLocation());
         //Object o = field.getObjectAt(randomLocation); //&& o != null
-        if ((free.size() > 0) && canBreed() && earlierbirths<MAX_LITTER_SIZE){
+        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS){
             Location loc = free.remove(0);
             Human young = new Human(false, field, loc);
             newHumanoids.add(young);
