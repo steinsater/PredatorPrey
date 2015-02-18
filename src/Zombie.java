@@ -22,7 +22,7 @@ public class Zombie extends Humanoid
     
     // Individual characteristics (instance fields).
     // The fox's age.
-    private int age;
+    private int zombieAge;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
 
@@ -40,17 +40,18 @@ public class Zombie extends Humanoid
     {
         super(field, location);
         if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
+            zombieAge = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(HUMAN_FOOD_VALUE);
         }
         else {
-            age = 0;
+            zombieAge = 0;
             foodLevel = HUMAN_FOOD_VALUE;
         }
     }
 
     public Zombie(Field field, Location location, int strength, int stamina, int luck, int age, int hunger){
         super(field, location, strength, stamina, luck, age, hunger);
+        this.zombieAge = 0;
     }
 
     public static Zombie makeZombie(Humanoid human){
@@ -98,9 +99,9 @@ public class Zombie extends Humanoid
     private void incrementAge()
     {
         if(days % 365 == 0){
-            age++;
+            zombieAge++;
         }
-        if(age > MAX_AGE) {
+        if(zombieAge > MAX_AGE) {
             setDead();
         }
     }
@@ -149,6 +150,11 @@ public class Zombie extends Humanoid
             setDead();
         }
     }
-   
-  
+
+    @Override
+    protected int battle() {
+
+        return rand.nextInt(1+((strength+stamina)*4/(1+zombieAge))*18/(1+age));
+
+    }
 }

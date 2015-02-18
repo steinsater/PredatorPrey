@@ -71,12 +71,12 @@ public class Simulator
         writeToFile = new GenerateCSV();
 
         views = new ArrayList<SimulatorView>();
-        
+
         SimulatorView view = new GridView(depth, width);
         view.setColor(Human.class, Color.ORANGE);
         view.setColor(Zombie.class, Color.BLUE);
         views.add(view);
-        
+
         view = new GraphView(500, 150, 500);
         view.setColor(Human.class, Color.BLACK);
         view.setColor(Zombie.class, Color.RED);
@@ -92,7 +92,9 @@ public class Simulator
      */
     public void runLongSimulation()
     {
+        long time = System.currentTimeMillis();
         simulate(900);
+        System.out.println(System.currentTimeMillis()-time);
     }
     
     /**
