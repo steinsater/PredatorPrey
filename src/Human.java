@@ -129,7 +129,7 @@ public class Human extends Humanoid
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         Location randomLocation = field.randomAdjacentLocation(getLocation());
         //Object o = field.getObjectAt(randomLocation); //&& o != null
-        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS){
+        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS && rand.nextInt(1000)<2){
             Location loc = free.remove(0);
             Human young = new Human(false, field, loc);
             newHumanoids.add(young);

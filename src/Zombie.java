@@ -161,7 +161,7 @@ public class Zombie extends Humanoid
     @Override
     protected int battle() {
 
-        return rand.nextInt(1+((strength+stamina)*18/(1+age+zombieAge)));
+        return rand.nextInt(1+((strength+stamina)*25/(1+age+zombieAge)));
 
     }
 }
