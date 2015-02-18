@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
-public class GridView extends JFrame implements SimulatorView
+public class GridView extends JFrame implements SimulatorView,Runnable
 {
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
@@ -24,11 +24,20 @@ public class GridView extends JFrame implements SimulatorView
     private final String POPULATION_PREFIX = "Population: ";
     private JLabel stepLabel, population;
     private FieldView fieldView;
+    private Simulator sim;
     
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
+
+    public void run() {
+        showStatus(sim.getStep(), sim.getField());
+    }
+
+    public void setSim(Simulator sim) {
+        this.sim = sim;
+    }
 
     /**
      * Create a view of the given width and height.

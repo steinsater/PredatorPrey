@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -36,9 +37,7 @@ public class Human extends Humanoid
     private static int days = 1;
     
     // Individual characteristics (instance fields).
-    
-    // The humans's age.
-    private int age;
+
     private double deathProbability = 0.01;
 
     /**
@@ -58,6 +57,16 @@ public class Human extends Humanoid
         }
     }
 
+    public Human(boolean randomAge,Field field, Location location,Human mom,Human dad) {
+        super(field, location,
+                (mom.strength+dad.strength-2+rand.nextInt(8))/2,            //strength
+                (mom.stamina+dad.stamina-2+rand.nextInt(8))/2,             //stamina
+                (mom.luck+dad.luck-2+rand.nextInt(8))/2,                //luck
+                10+rand.nextInt(15), //age
+                rand.nextInt(10)     //hunger
+        );
+    }
+
     public static int getDeaths() {
         return deaths;
     }
@@ -68,6 +77,7 @@ public class Human extends Humanoid
         deaths++;
 
         GenerateCSV.fileAppendBuffer(age+","+reason+"\n","humanDeaths.csv");
+        GenerateCSV.fileAppendBuffer(""+strength+","+stamina+","+luck+"\n","childStats.csv");
     }
 
     /**
@@ -127,16 +137,32 @@ public class Human extends Humanoid
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        Location randomLocation = field.randomAdjacentLocation(getLocation());
-        //Object o = field.getObjectAt(randomLocation); //&& o != null
-        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS && rand.nextInt(1000)<2){
-            Location loc = free.remove(0);
-            Human young = new Human(false, field, loc);
-            newHumanoids.add(young);
-            born++;
-            earlierbirths++;
-        }
 
+        List<Location> mateLocations = field.adjacentLocations(getLocation());
+        ArrayList<Human> mates = new ArrayList<Human>();
+        for(Location loc:mateLocations){
+            Object o = field.getObjectAt(loc);
+            if(o instanceof Human){
+                mates.add((Human)o);
+            }
+        }
+        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS && mates.size()>0){
+            Human mate=mates.get(0);
+            for(Human human:mates){
+                if(human.luck+human.stamina+human.strength>mate.luck+mate.stamina+mate.strength){
+                    mate=human;
+                }
+            }
+            if(luck+stamina+strength<=mate.luck+mate.stamina+mate.strength+2){
+                if(rand.nextInt(10000)<3){
+                    Location loc = free.remove(0);
+                    Human young = new Human(false, field, loc,this,mate);
+                    newHumanoids.add(young);
+                    born++;
+                    earlierbirths++;
+                }
+            }
+        }
     }
         
     private void attack(){

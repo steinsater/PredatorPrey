@@ -19,9 +19,9 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 256;//80;
     // The probability that a fox will be created in any given grid position.
-    private static final double ZOMBIE_CREATION_PROBABILITY = 0.01;
+    private static final double ZOMBIE_CREATION_PROBABILITY = 0.002;   //0.002  MO  0.002 likt
     // The probability that a rabbit will be created in any given grid position.
-    private static final double HUMAN_CREATION_PROBABILITY = 0.99;
+    private static final double HUMAN_CREATION_PROBABILITY = 0.2;      //0.3  MO   0.2 likt
 
     // List of humanoids in the field.
     private List<Agent> humanoids;
@@ -37,7 +37,18 @@ public class Simulator
 
     // The current step of the simulation.
     private int step;
+
+    public int getStep() {
+        return step;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    private static final int totSteps = 5000;
     // A graphical view of the simulation.
+    private List<Thread> threads;
     private List<SimulatorView> views;
     
     /**
@@ -71,17 +82,24 @@ public class Simulator
         field = new Field(depth, width);
         stats = new FieldStats();
 
+//        threads = new ArrayList<Thread>();
         views = new ArrayList<SimulatorView>();
 
         SimulatorView view = new GridView(depth, width);
         view.setColor(Human.class, Color.BLACK);
         view.setColor(Zombie.class, Color.RED);
+        view.setSim(this);
         views.add(view);
+//        threads.add(new Thread((Runnable) view));
+
 
         view = new GraphView(500, 150, 500);
         view.setColor(Human.class, Color.BLACK);
         view.setColor(Zombie.class, Color.RED);
+        view.setSim(this);
         views.add(view);
+//        threads.add(new Thread((Runnable)view));
+
 
         // Setup a valid starting point.
         reset();
@@ -94,7 +112,7 @@ public class Simulator
     public void runLongSimulation()
     {
         long time = System.currentTimeMillis();
-        simulate(1000);
+        simulate(totSteps);
         System.out.println(System.currentTimeMillis()-time);
     }
     
@@ -143,7 +161,7 @@ public class Simulator
 
         humanoids.addAll(newHumanoids);
 
-        updateViews();
+        updateViews(); //updateviewsT for threaded
     }
         
     /**
@@ -160,6 +178,18 @@ public class Simulator
         populate();
         updateViews();
     }
+
+    public void resetT()
+    {
+        step = 0;
+        humanoids.clear();
+//        for (SimulatorView view : views) {
+//            view.reset();
+//        }
+
+        populate();
+        updateViewsT();
+    }
     
     /**
      * Update all existing views.
@@ -168,6 +198,12 @@ public class Simulator
     {
         for (SimulatorView view : views) {
             view.showStatus(step, field);
+        }
+    }
+    private void updateViewsT()
+    {
+        for (Thread t : threads) {
+            t.run();
         }
     }
     
