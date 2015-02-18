@@ -73,8 +73,8 @@ public class Simulator
         views = new ArrayList<SimulatorView>();
 
         SimulatorView view = new GridView(depth, width);
-        view.setColor(Human.class, Color.ORANGE);
-        view.setColor(Zombie.class, Color.BLUE);
+        view.setColor(Human.class, Color.GREEN);
+        view.setColor(Zombie.class, Color.RED);
         views.add(view);
 
         view = new GraphView(500, 150, 500);
@@ -93,7 +93,7 @@ public class Simulator
     public void runLongSimulation()
     {
         long time = System.currentTimeMillis();
-        simulate(900);
+        simulate(9000);
         System.out.println(System.currentTimeMillis()-time);
     }
     
