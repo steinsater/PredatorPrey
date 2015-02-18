@@ -1,0 +1,14 @@
+Project: foxes-and-rabbits-graph
+Authors: Michael Kölling and David J. Barnes
+Edit: Erik, Stein og Ole-Martin
+
+Things we must do:
+- Lage til generert CSV fil med komma-greier
+- Fikse battle
+- Wraparound
+
+Things we could do:
+-
+
+Things we should not do:
+- Build a spaceship
