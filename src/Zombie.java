@@ -15,7 +15,7 @@ public class Zombie extends Humanoid
     
    
     // The age to which a fox can live.
-    private static final int MAX_AGE = 20000;
+    //private static final int MAX_AGE = 20000;
     private static final int HUMAN_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -41,7 +41,7 @@ public class Zombie extends Humanoid
     {
         super(field, location);
         if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
+           // age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(HUMAN_FOOD_VALUE);
         }
         else {
@@ -101,9 +101,10 @@ public class Zombie extends Humanoid
         if(days % 365 == 0){
             age++;
         }
+        /*
         if(age > MAX_AGE) {
             setDead();
-        }
+        }*/
         deathProbability = (deathProbability + 0.001);
         // Checks if the humans age is over the age set for death by natural causes
         if (rand.nextDouble() <= deathProbability) {

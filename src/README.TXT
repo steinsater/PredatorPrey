@@ -2,22 +2,15 @@ Project: foxes-and-rabbits-graph
 Authors: Michael Kölling and David J. Barnes
 Edit: Erik, Stein og Ole-Martin
 
-This project is part of the material for chapter 10 of the book
+This we need to do:
+- Implementere skikkelig battle funksjon
+-
 
-   Objects First with Java - A Practical Introduction using BlueJ
-   Fifth edition
-   David J. Barnes and Michael Kölling
-   Pearson Education, 2012
+This we could do:
+- Eksportere statistikk til f.eks MatLab?
+    - Deathcauses (natural cause, uflaks, drept av menneske..)
+    - Menneske til zombie og nyfødte menneske
 
-A predator-prey simulation involving foxes and rabbits in
-an enclosed rectangular field.
-
-This is the first version of the simulation. This version
-does not use inheritance.
-
-How to start:
-    Create a Simulator object.
-    Then call one of:
-        + simulateOneStep - for a single step.
-        + simulate - and supply a number (say 10) for that many steps.
-        + runLongSimulation - for a simulation of 500 steps.
+This we don't need to do:
+- Build a spaceship
+- Make a new HipHop song
