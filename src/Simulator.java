@@ -21,7 +21,7 @@ public class Simulator
     // The probability that a fox will be created in any given grid position.
     private static final double ZOMBIE_CREATION_PROBABILITY = 0.005;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double HUMAN_CREATION_PROBABILITY = 0.9;
+    private static final double HUMAN_CREATION_PROBABILITY = 0.09;
 
     // List of humanoids in the field.
     private List<Agent> humanoids;
@@ -29,6 +29,8 @@ public class Simulator
     private Field field;
 
     private int[][] agearray = new int[2][9000];
+
+    private GenerateCSV writeToFile;
 
 
 
@@ -66,6 +68,7 @@ public class Simulator
         
         humanoids = new ArrayList<Agent>();
         field = new Field(depth, width);
+        writeToFile = new GenerateCSV();
 
         views = new ArrayList<SimulatorView>();
         
@@ -89,7 +92,7 @@ public class Simulator
      */
     public void runLongSimulation()
     {
-        simulate(9000);
+        simulate(900);
     }
     
     /**
@@ -105,7 +108,9 @@ public class Simulator
 
         for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
             simulateOneStep();
+            writeToFile.savePopulationCount(field);
         }
+        writeToFile.generateCsvFile("test.csv");
     }
     
     /**

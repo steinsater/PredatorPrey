@@ -8,6 +8,7 @@ import java.util.List;
  */
 public abstract class Agent
 {
+    private static GenerateCSV deadFile = new GenerateCSV();
     // Whether the animal is alive or not.
     private boolean alive;
     // The humanoid's field.

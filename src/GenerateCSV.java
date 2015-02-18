@@ -1,23 +1,40 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GenerateCSV
 {
-    public static void main(String [] args)
-    {
-        generateCsvFile("c:\\test.csv");
+    ArrayList<String> out;
+    FieldStats stats;
+
+    public GenerateCSV() {
+        out = new ArrayList<String>();
+        stats = new FieldStats();
     }
 
-    private static void generateCsvFile(String sFileName)
+    public void savePopulationCount(Field field){
+        stats.reset();
+//        for(int row = 0; row < field.getDepth(); row++) {
+//            for(int col = 0; col < field.getWidth(); col++) {
+//                Object humanoid = field.getObjectAt(row, col);
+//                if(humanoid != null) {
+//                    stats.incrementCount(humanoid.getClass());
+//                }
+//            }
+//        }
+//        stats.countFinished();
+        out.add(stats.getPopulationDetails(field)+"\n");
+    }
+
+    public void generateCsvFile(String sFileName)
     {
         try
         {
             FileWriter writer = new FileWriter(sFileName);
 
-            writer.append();
-            writer.append(',');
-            //writer.append("Age");
-            //writer.append('\n');
+            for(String line:out){
+                writer.append(line);
+            }
 
             writer.flush();
             writer.close();
