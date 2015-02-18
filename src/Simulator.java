@@ -94,7 +94,7 @@ public class Simulator
     public void runLongSimulation()
     {
         long time = System.currentTimeMillis();
-        simulate(100);
+        simulate(10000);
         System.out.println(System.currentTimeMillis()-time);
     }
     

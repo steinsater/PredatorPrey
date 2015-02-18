@@ -150,6 +150,6 @@ public class Human extends Humanoid
      */
     private boolean canBreed()
     {
-        return MIN_BREEDING_AGE <= age && age >= MAX_BREEDING_AGE;
+        return MIN_BREEDING_AGE <= age && age <= MAX_BREEDING_AGE;
     }
 }
