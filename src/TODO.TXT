@@ -5,9 +5,7 @@ Edit: Erik, Stein og Ole-Martin
 -----------------------------------------------------
 
 Things we must do:
-- Lage til generert CSV fil med komma-greier - 40%
-- Fikse battle - 60%
-- Wraparound
+- ?
 
 ---------------
 
@@ -21,3 +19,8 @@ Things we should not do:
 - Build a spaceship
 
 ---------------
+
+Done:
+- Wraparound
+- Lage til generert CSV fil med komma-greier
+- Fikse battle
