@@ -1,0 +1,23 @@
+Project: foxes-and-rabbits-graph
+Authors: Michael Kölling and David J. Barnes
+Edit: Erik, Stein og Ole-Martin
+
+-----------------------------------------------------
+
+Things we must do:
+- Lage til generert CSV fil med komma-greier - 40%
+- Fikse battle - 60%
+- Wraparound
+
+---------------
+
+Things we could do:
+- Legge inn hvor zombiene skal begynne, i et hjørne f.eks (tror dette vil gjøre at grafen blir bedre)
+- Knapp som sier "ZOMBIEOUTBREAK", åso blir noen random mennesker zombier
+
+---------------
+
+Things we should not do:
+- Build a spaceship
+
+---------------

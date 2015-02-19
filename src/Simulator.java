@@ -19,9 +19,9 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 256;//80;
     // The probability that a fox will be created in any given grid position.
-    private static final double ZOMBIE_CREATION_PROBABILITY = 0.005;
+    private static final double ZOMBIE_CREATION_PROBABILITY = 0.002;   //0.002  MO  0.002 likt
     // The probability that a rabbit will be created in any given grid position.
-    private static final double HUMAN_CREATION_PROBABILITY = 0.9;
+    private static final double HUMAN_CREATION_PROBABILITY = 0.2;      //0.3  MO   0.2 likt
 
     // List of humanoids in the field.
     private List<Agent> humanoids;
@@ -30,11 +30,25 @@ public class Simulator
 
     private int[][] agearray = new int[2][9000];
 
+    private FieldStats stats;
+    private GenerateCSV writeToFile;
+
 
 
     // The current step of the simulation.
     private int step;
+
+    public int getStep() {
+        return step;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    private static final int totSteps = 5000;
     // A graphical view of the simulation.
+    private List<Thread> threads;
     private List<SimulatorView> views;
     
     /**
@@ -66,18 +80,26 @@ public class Simulator
         
         humanoids = new ArrayList<Agent>();
         field = new Field(depth, width);
+        stats = new FieldStats();
 
+//        threads = new ArrayList<Thread>();
         views = new ArrayList<SimulatorView>();
-        
+
         SimulatorView view = new GridView(depth, width);
-        view.setColor(Human.class, Color.ORANGE);
-        view.setColor(Zombie.class, Color.BLUE);
+        view.setColor(Human.class, Color.BLACK);
+        view.setColor(Zombie.class, Color.RED);
+        view.setSim(this);
         views.add(view);
-        
+//        threads.add(new Thread((Runnable) view));
+
+
         view = new GraphView(500, 150, 500);
         view.setColor(Human.class, Color.BLACK);
         view.setColor(Zombie.class, Color.RED);
+        view.setSim(this);
         views.add(view);
+//        threads.add(new Thread((Runnable)view));
+
 
         // Setup a valid starting point.
         reset();
@@ -89,7 +111,9 @@ public class Simulator
      */
     public void runLongSimulation()
     {
-        simulate(9000);
+        long time = System.currentTimeMillis();
+        simulate(totSteps);
+        System.out.println(System.currentTimeMillis()-time);
     }
     
     /**
@@ -103,9 +127,13 @@ public class Simulator
         //int[] humancount = new int [numSteps];
 
 
-        for(int step = 1; step <= numSteps && views.get(0).isViable(field); step++) {
+        for(int step = 1; step <= numSteps /*&& views.get(0).isViable(field)*/; step++) {
             simulateOneStep();
+            stats.reset();
+            GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population.csv");
+            GenerateCSV.fileAppendBuffer(""+step+","+Human.getBorn()+","+Human.getDeaths()+"\n","newBorns.csv");
         }
+        GenerateCSV.generateCsvFiles();
     }
     
     /**
@@ -133,7 +161,7 @@ public class Simulator
 
         humanoids.addAll(newHumanoids);
 
-        updateViews();
+        updateViews(); //updateviewsT for threaded
     }
         
     /**
@@ -150,6 +178,18 @@ public class Simulator
         populate();
         updateViews();
     }
+
+    public void resetT()
+    {
+        step = 0;
+        humanoids.clear();
+//        for (SimulatorView view : views) {
+//            view.reset();
+//        }
+
+        populate();
+        updateViewsT();
+    }
     
     /**
      * Update all existing views.
@@ -158,6 +198,12 @@ public class Simulator
     {
         for (SimulatorView view : views) {
             view.showStatus(step, field);
+        }
+    }
+    private void updateViewsT()
+    {
+        for (Thread t : threads) {
+            t.run();
         }
     }
     
@@ -172,7 +218,7 @@ public class Simulator
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= ZOMBIE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Zombie zombie = new Zombie(true, field, location);
+                    Zombie zombie = new Zombie(false, field, location);
                     humanoids.add(zombie);
                 }
                 else if(rand.nextDouble() <= HUMAN_CREATION_PROBABILITY) {

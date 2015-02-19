@@ -15,19 +15,18 @@ public class Zombie extends Humanoid
     
    
     // The age to which a fox can live.
-    //private static final int MAX_AGE = 20000;
+    private static final int MAX_AGE = 2000;
     private static final int HUMAN_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
     // The fox's age.
-    private int age;
+    private int zombieAge;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
-    private double deathProbability = 0.002;
 
-    private static int days = 1;
+    private int days = 1;
 
     /**
      * Create a fox. A fox can be created as a new born (age zero
@@ -41,22 +40,23 @@ public class Zombie extends Humanoid
     {
         super(field, location);
         if(randomAge) {
-           // age = rand.nextInt(MAX_AGE);
+            zombieAge = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(HUMAN_FOOD_VALUE);
         }
         else {
-            age = 0;
+            zombieAge = 0;
             foodLevel = HUMAN_FOOD_VALUE;
         }
     }
 
     public Zombie(Field field, Location location, int strength, int stamina, int luck, int age, int hunger){
         super(field, location, strength, stamina, luck, age, hunger);
+        this.zombieAge = 0;
     }
 
     public static Zombie makeZombie(Humanoid human){
         Zombie zomb = new Zombie(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
-        human.setDead();
+        human.setDead("Became Zombie");
         return zomb;
     }
 
@@ -99,16 +99,10 @@ public class Zombie extends Humanoid
     private void incrementAge()
     {
         if(days % 365 == 0){
-            age++;
+            zombieAge++;
         }
-        /*
-        if(age > MAX_AGE) {
-            setDead();
-        }*/
-        deathProbability = (deathProbability + 0.001);
-        // Checks if the humans age is over the age set for death by natural causes
-        if (rand.nextDouble() <= deathProbability) {
-            setDead();
+        if(zombieAge > MAX_AGE) {
+            setDead("Decomposed");
         }
     }
     
@@ -119,7 +113,7 @@ public class Zombie extends Humanoid
     {
         foodLevel--;
         if(foodLevel <= 0) {
-            setDead();
+            setDead("Starvation");
         }
     }
     
@@ -149,13 +143,25 @@ public class Zombie extends Humanoid
         return null;
     }
 
+    @Override
+    protected void setDead(String reason) {
+        super.setDead(reason);
+        GenerateCSV.fileAppendBuffer(zombieAge+","+age+","+reason+"\n","zombieDeaths.csv");
+    }
+
     private void attemptEat(Human human,List<Agent> newZombies){
+
         if(battle()>human.battle()){
             newZombies.add(makeZombie(human));
         }else{
-            setDead();
+            setDead("Killed by human");
         }
     }
-   
-  
+
+    @Override
+    protected int battle() {
+
+        return rand.nextInt(((strength+stamina+luck)-zombieAge)>=1 ? ((strength+stamina+luck)-zombieAge):1);
+
+    }
 }

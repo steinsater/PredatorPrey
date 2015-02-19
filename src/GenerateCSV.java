@@ -1,31 +1,37 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GenerateCSV
 {
-    public static void main(String [] args)
-    {
-        //HUSK Å ENDRE FOLDER
-        generateCsvFile("C:/Users/Ole-Martin/Desktop/test.csv");
+    static HashMap<String,ArrayList<String>> files = new HashMap<String,ArrayList<String>>();
+
+    public static void fileAppendBuffer(String line,String sFileName){
+        if(files.get(sFileName)==null){
+            files.put(sFileName,new ArrayList<String>());
+        }
+        files.get(sFileName).add(line);
     }
 
-    private static void generateCsvFile(String sFileName)
+    public static void generateCsvFiles()
     {
-        try
-        {
-            FileWriter writer = new FileWriter(sFileName);
+        for(String file:files.keySet()){
+            try
+            {
+                FileWriter writer = new FileWriter(file);
 
-            writer.append("hei");
-            writer.append(',');
-            writer.append("Age");
-            writer.append('\n');
+                for(String line:files.get(file)){
+                    writer.append(line);
+                }
 
-            writer.flush();
-            writer.close();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
+                writer.flush();
+                writer.close();
+                }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

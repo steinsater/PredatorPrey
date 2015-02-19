@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,27 +14,30 @@ public class Human extends Humanoid
     // Characteristics shared by all humans (class variables).
 
     // The age at which a human can start to breed.
-    private static final int MIN_BREEDING_AGE = 18;
+    private static final int MIN_BREEDING_AGE = 30;
     // The age at which a human can start to breed.
-    private static final int MAX_BREEDING_AGE = 40;
+    private static final int MAX_BREEDING_AGE = 50;
     // The age to which a human can live.
     private static final int MAX_AGE = 100;
     // The age a human starts to die of natural causes
     private static final int NATURALCAUSE_AGE = 60;
     // The maximum number of births.
-    private static final int MAX_BIRTHS = 8;
-    private static int earlierbirths = 0;
+    private static final int MAX_BIRTHS = 2;
+    private int earlierbirths = 0;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     private static int born = 0;
+    private static int deaths = 0;
+
+    public static int getBorn() {
+        return born;
+    }
 
     private static int days = 1;
     
     // Individual characteristics (instance fields).
-    
-    // The humans's age.
-    private int age;
+
     private double deathProbability = 0.01;
 
     /**
@@ -47,12 +51,35 @@ public class Human extends Humanoid
     public Human(boolean randomAge, Field field, Location location)
     {
         super(field, location);
-        age = 0;
+        age = 10+rand.nextInt(15);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
         }
     }
-    
+
+    public Human(boolean randomAge,Field field, Location location,Human mom,Human dad) {
+        super(field, location,
+                (mom.strength+dad.strength-2+rand.nextInt(8))/2,            //strength
+                (mom.stamina+dad.stamina-2+rand.nextInt(8))/2,             //stamina
+                (mom.luck+dad.luck-2+rand.nextInt(8))/2,                //luck
+                10+rand.nextInt(15), //age
+                rand.nextInt(10)     //hunger
+        );
+    }
+
+    public static int getDeaths() {
+        return deaths;
+    }
+
+    @Override
+    protected void setDead(String reason) {
+        super.setDead(reason);
+        deaths++;
+
+        GenerateCSV.fileAppendBuffer(age+","+reason+"\n","humanDeaths.csv");
+        GenerateCSV.fileAppendBuffer(""+strength+","+stamina+","+luck+"\n","childStats.csv");
+    }
+
     /**
      * This is what the human does most of the time - it runs
      * around. Sometimes it will breed or die of old age.
@@ -71,7 +98,7 @@ public class Human extends Humanoid
             }
             else {
                 // Overcrowding.
-                setDead();
+                setDead("Overcrowding");
             }
         }
     }
@@ -89,12 +116,12 @@ public class Human extends Humanoid
         }
 
         if(age > MAX_AGE) {
-            setDead();
+            setDead("Old age");
         }
 
         // Checks if the humans age is over the age set for death by natural causes
         if (age > NATURALCAUSE_AGE && rand.nextDouble() <= deathProbability) {
-            setDead();
+            setDead("Natural causes");
         }
         
     }
@@ -110,17 +137,32 @@ public class Human extends Humanoid
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        Location randomLocation = field.randomAdjacentLocation(getLocation());
-        //Object o = field.getObjectAt(randomLocation); //&& o != null
-        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS){
-            Location loc = free.remove(0);
-            Human young = new Human(false, field, loc);
-            newHumanoids.add(young);
-            born++;
-            earlierbirths++;
-            numberBirth++;
-        }
 
+        List<Location> mateLocations = field.adjacentLocations(getLocation());
+        ArrayList<Human> mates = new ArrayList<Human>();
+        for(Location loc:mateLocations){
+            Object o = field.getObjectAt(loc);
+            if(o instanceof Human){
+                mates.add((Human)o);
+            }
+        }
+        if ((free.size() > 0) && canBreed() && earlierbirths< MAX_BIRTHS && mates.size()>0){
+            Human mate=mates.get(0);
+            for(Human human:mates){
+                if(human.luck+human.stamina+human.strength>mate.luck+mate.stamina+mate.strength){
+                    mate=human;
+                }
+            }
+            if(luck+stamina+strength<=mate.luck+mate.stamina+mate.strength+2){
+                if(rand.nextInt(10000)<3){
+                    Location loc = free.remove(0);
+                    Human young = new Human(false, field, loc,this,mate);
+                    newHumanoids.add(young);
+                    born++;
+                    earlierbirths++;
+                }
+            }
+        }
     }
         
     private void attack(){
@@ -134,6 +176,6 @@ public class Human extends Humanoid
      */
     private boolean canBreed()
     {
-        return MIN_BREEDING_AGE <= age && age >= MAX_BREEDING_AGE;
+        return MIN_BREEDING_AGE <= age && age <= MAX_BREEDING_AGE;
     }
 }

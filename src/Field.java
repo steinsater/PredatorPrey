@@ -167,16 +167,16 @@ public class Field
             int row = location.getRow();
             int col = location.getCol();
             for(int roffset = -1; roffset <= 1; roffset++) {
-                int nextRow = row + roffset;
-                if(nextRow >= 0 && nextRow < depth) {
+                int nextRow = ((row + roffset)%depth+depth)%depth;
+//                if(nextRow >= 0 && nextRow < depth) {
                     for(int coffset = -1; coffset <= 1; coffset++) {
-                        int nextCol = col + coffset;
+                        int nextCol = ((col + coffset)%width+width)%width;
                         // Exclude invalid locations and the original location.
-                        if(nextCol >= 0 && nextCol < width && (roffset != 0 || coffset != 0)) {
+//                        if(nextCol >= 0 && nextCol < width && (roffset != 0 || coffset != 0)) {
                             locations.add(new Location(nextRow, nextCol));
-                        }
+//                        }
                     }
-                }
+//                }
             }
             
             // Shuffle the list. Several other methods rely on the list

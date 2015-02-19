@@ -11,7 +11,7 @@ import java.util.*;
  * @author Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
-public class GraphView implements SimulatorView
+public class GraphView implements SimulatorView,Runnable
 {
     private static final Color LIGHT_GRAY = new Color(0, 0, 0, 40);
 
@@ -19,6 +19,8 @@ public class GraphView implements SimulatorView
     private static GraphPanel graph;
     private static JLabel stepLabel;
     private static JLabel countLabel;
+    private Simulator sim;
+
 
     // The classes being tracked by this view
     private Set<Class> classes;
@@ -33,8 +35,6 @@ public class GraphView implements SimulatorView
      * @param width The width of the plotter window (in pixles).
      * @param height The height of the plotter window (in pixles).
      * @param startMax The initial maximum value for the y axis.
-     * @param world The world object.
-     * @param class1 The first class to be plotted.
      * @param width The second class to be plotted.
      */
     public GraphView(int width, int height, int startMax)
@@ -51,6 +51,14 @@ public class GraphView implements SimulatorView
         }
 
         //showStatus(0, null);
+    }
+
+    public void run() {
+        showStatus(sim.getStep(), sim.getField());
+    }
+
+    public void setSim(Simulator sim) {
+        this.sim = sim;
     }
 
     /**

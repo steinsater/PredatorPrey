@@ -35,12 +35,11 @@ public abstract class Humanoid extends Agent{
         this.strength = rand.nextInt(10);
         this.stamina = rand.nextInt(10);
         this.luck = rand.nextInt(10);
-        this.age = rand.nextInt(10);
+        this.age = 16+rand.nextInt(50);
         this.hunger = rand.nextInt(10);
     }
     protected int battle(){
-        System.out.println(1+strength);
-        return rand.nextInt(1+strength);
+        return rand.nextInt(((strength+stamina+luck)-Math.floorDiv(age,25))>=1 ? ((strength+stamina+luck)-Math.floorDiv(age,25)):1);
     }
 
 

@@ -8,6 +8,7 @@ import java.util.List;
  */
 public abstract class Agent
 {
+    private static GenerateCSV deadFile = new GenerateCSV();
     // Whether the animal is alive or not.
     private boolean alive;
     // The humanoid's field.
@@ -50,7 +51,7 @@ public abstract class Agent
      * Indicate that the animal is no longer alive.
      * It is removed from the field.
      */
-    protected void setDead()
+    protected void setDead(String reason)
     {
         alive = false;
         if(location != null) {
