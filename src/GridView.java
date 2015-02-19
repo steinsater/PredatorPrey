@@ -15,10 +15,10 @@ import java.util.Map;
 public class GridView extends JFrame implements SimulatorView,Runnable
 {
     // Colors used for empty locations.
-    private static final Color EMPTY_COLOR = Color.white;
+    private static final Color EMPTY_COLOR = Color.WHITE;
 
     // Color used for objects that have no defined color.
-    private static final Color UNKNOWN_COLOR = Color.gray;
+    private static final Color UNKNOWN_COLOR = Color.WHITE;
 
     private final String STEP_PREFIX = "Step: ";
     private final String POPULATION_PREFIX = "Population: ";

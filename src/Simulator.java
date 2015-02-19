@@ -82,7 +82,7 @@ public class Simulator
         field = new Field(depth, width);
         stats = new FieldStats();
 
-//        threads = new ArrayList<Thread>();
+        threads = new ArrayList<Thread>();
         views = new ArrayList<SimulatorView>();
 
         SimulatorView view = new GridView(depth, width);
@@ -90,7 +90,7 @@ public class Simulator
         view.setColor(Zombie.class, Color.RED);
         view.setSim(this);
         views.add(view);
-//        threads.add(new Thread((Runnable) view));
+        threads.add(new Thread((Runnable) view));
 
 
         view = new GraphView(500, 150, 500);
@@ -98,11 +98,11 @@ public class Simulator
         view.setColor(Zombie.class, Color.RED);
         view.setSim(this);
         views.add(view);
-//        threads.add(new Thread((Runnable)view));
+        threads.add(new Thread((Runnable)view));
 
 
         // Setup a valid starting point.
-        reset();
+        resetT();
     }
     
     /**
@@ -161,7 +161,7 @@ public class Simulator
 
         humanoids.addAll(newHumanoids);
 
-        updateViews(); //updateviewsT for threaded
+        updateViewsT(); //updateviewsT for threaded
     }
         
     /**
