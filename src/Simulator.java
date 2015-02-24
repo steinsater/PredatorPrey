@@ -130,7 +130,7 @@ public class Simulator
         for(int step = 1; step <= numSteps /*&& views.get(0).isViable(field)*/; step++) {
             simulateOneStep();
             stats.reset();
-            GenerateCSV.fileAppendBuffer(stats.getPopulationCount(field, Zombie.class) + "," + stats.getPopulationCount(field, Human.class) + "\n", "population.csv");
+            GenerateCSV.fileAppendBuffer(""+step+","+stats.getPopulationCount(field, Zombie.class) + "," + +Zombie.getConvertions()+","+Zombie.getDeaths() + "," + stats.getPopulationCount(field, Human.class) + "," +Human.getBorn()+","+Human.getDeaths()+ "\n", "population.csv");
             GenerateCSV.fileAppendBuffer(""+step+","+Human.getBorn()+","+Human.getDeaths()+"\n","newBorns.csv");
         }
         GenerateCSV.generateCsvFiles();
