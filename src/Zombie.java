@@ -19,7 +19,8 @@ public class Zombie extends Humanoid
     private static final int HUMAN_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+    private static int deaths = 0;
+    private static int convertions = 0;
     // Individual characteristics (instance fields).
     // The fox's age.
     private int zombieAge;
@@ -57,6 +58,7 @@ public class Zombie extends Humanoid
     public static Zombie makeZombie(Humanoid human){
         Zombie zomb = new Zombie(human.getField(),human.getLocation(),human.strength,human.stamina,human.luck,human.age,human.hunger);
         human.setDead("Became Zombie");
+        convertions++;
         return zomb;
     }
 
@@ -146,6 +148,7 @@ public class Zombie extends Humanoid
     @Override
     protected void setDead(String reason) {
         super.setDead(reason);
+        deaths++;
         GenerateCSV.fileAppendBuffer(zombieAge+","+age+","+reason+"\n","zombieDeaths.csv");
     }
 
@@ -163,5 +166,13 @@ public class Zombie extends Humanoid
 
         return rand.nextInt(((strength+stamina+luck)-zombieAge)>=1 ? ((strength+stamina+luck)-zombieAge):1);
 
+    }
+
+    public static int getConvertions() {
+        return convertions;
+    }
+
+    public static int getDeaths() {
+        return deaths;
     }
 }
